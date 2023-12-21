@@ -2,25 +2,32 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { UseCategories } from '../../hooks/UseCategories';
 import { Link } from 'react-router-dom';
 
-
-
 function NavBar() {
+
+  const {category} = UseCategories();
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Link>ScisoAderezos</Link>
+        <Navbar.Brand href="#home">ScisoAderezos</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="">Home</Nav.Link>
+            <Link to={`/`}><Nav.Link href="#home">Home</Nav.Link></Link>
             <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Productos" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Producto 1</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.1">Producto 2</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.1">Producto 3</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.1">Producto 4</NavDropdown.Item>
+            <NavDropdown title="Categorias" id="basic-nav-dropdown">
+              {
+                category.map((item, index) =>{
+                  return( 
+                  <NavDropdown.Item key={index} href='#action/3.1'>
+                    <Link to={`/category/${item}`}>{item}</Link>
+                    </NavDropdown.Item>);
+                })
+              }
+              
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
